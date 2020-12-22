@@ -1,32 +1,8 @@
-/**
- *
- */
 #include "monty.h"
-
-void (*cmd(char *op_code))(stack_t **stack, unsigned int line_number)
+/**void push(stack_t **stack, unsigned int line_number)
 {
-/**	instruction_t cmd[] = {
-		{"push", push},
-		{"pall", pall},
-		{"pint", pint},
-		{"pop", pop},
-		{"swap", swap},
-		{"add", add},
-		{"nop", nop},
-		{"NULL", NULL},
-	};
-*/	printf("%s", op_code);
-/**	int i;
-	if (op_code == NULL)
-	{
-		return NULL;
-	}
-	for (i = 0; i < 8; i++)
-	{
-		strcmp(cmd[i], op_code);
-		}*/
-	return (0);
-}
+	printf("Test %d", line_number);
+	}*/
 
 char *op_code_check(char **lines)
 {
@@ -41,7 +17,23 @@ char *op_code_check(char **lines)
 		}
 		strcpy(hold, lines[i]);
 		line = strtok(hold, " ");
-		cmd(line);
+		printf("Line: %s\n", line);
+		if (strcmp("push", line) == 0)
+			printf("push!");
+		else if (strcmp("pall", line) == 0)
+			printf("pall!");
+		else if (strcmp("pint", line) == 0)
+                        printf("pint!");
+		else if (strcmp("pop", line) == 0)
+                        printf("pop!");
+		else if (strcmp("swap", line) == 0)
+                        printf("swap!");
+		else if (strcmp("add", line) == 0)
+                        printf("add");
+		else if (strcmp("nop", line) == 0)
+                        printf("nop!");
+		else
+			printf("None!");
 	}
 	return (0);
 }
