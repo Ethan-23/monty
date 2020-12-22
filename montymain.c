@@ -1,11 +1,11 @@
 /**
- *gcc -Wall -Werror -Wextra -pedantic *.c -o monty
+ *
  */
 #include "monty.h"
 
-/*void (*cmd(char *op_code))(stack_t **stack, unsigned int line_number)
+void (*cmd(char *op_code))(stack_t **stack, unsigned int line_number)
 {
-	instruction_t cmd[] = {
+/**	instruction_t cmd[] = {
 		{"push", push},
 		{"pall", pall},
 		{"pint", pint},
@@ -15,17 +15,36 @@
 		{"nop", nop},
 		{"NULL", NULL},
 	};
-	int i;
+*/	printf("%s", op_code);
+/**	int i;
 	if (op_code == NULL)
 	{
 		return NULL;
 	}
 	for (i = 0; i < 8; i++)
 	{
-	}
+		strcmp(cmd[i], op_code);
+		}*/
+	return (0);
 }
-*/
 
+char *op_code_check(char **lines)
+{
+	char *hold = NULL, *line = NULL;
+	int i = 0;
+	for (i = 0; lines[i] != '\0'; i++)
+	{
+		hold = malloc((strlen(lines[i]) + 1) * sizeof(char));
+		if (hold == NULL)
+		{
+			printf("Error fill later");
+		}
+		strcpy(hold, lines[i]);
+		line = strtok(hold, " ");
+		cmd(line);
+	}
+	return (0);
+}
 
 #include "monty.h"
 
@@ -73,20 +92,11 @@ int main(int argc, char **argv)
         {
 		lines[a] = malloc(strlen(line + 1) * sizeof(char));
 		strcpy(lines[a], line);
-		printf("%s", lines[a]);
 		a++;
         }
-/**        for (k = 0; k < count; k++)
-        {
-                for (linelen = 0; c[linelen] != '\n'; linelen++)
-                {}
-                lines[k] = malloc(linelen * sizeof(char));
-                for (copy = 0; c[copy] != '\n'; copy++)
-                {
-                  lines[k][copy] = c[copy];
-                }
-                printf("%s", lines[k]);
-		}*/
+	op_code_check(lines);
+	while(lines[a] != NULL)
+		free(lines[a]);
         fclose(fd);
         free(file);
         free(lines);

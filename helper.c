@@ -15,3 +15,4 @@ int get_len(char *filename)
         }
 	return (count);
 }
+
