@@ -15,57 +15,14 @@ void (*cmd(char *code))(stack_t **stack, unsigned int line_number)
 	for (i = 0; cmd_list[i].opcode != NULL; i++)
 	{
 		if (strcmp(cmd_list[i].opcode, code) == 0)
-			break;
+			return (cmd_list[i].f);
 	}
-	return (cmd_list[i].f);
-}
-/**void push(stack_t **stack, unsigned int line_number)
-{
-	printf("Test %d", line_number);
-	}*/
-
-void op_code_check(char **lines)
-{
-	char *hold = NULL, *line = NULL;
-	int i = 0;
-        stack_t *stack = NULL;
-        void (*f)(stack_t **, unsigned int);
-
-	for (i = 0; lines[i] != '\0'; i++)
-	{
-		hold = malloc((strlen(lines[i]) + 1) * sizeof(char));
-		if (hold == NULL)
-		{
-			printf("Error fill later");
-		}
-		strcpy(hold, lines[i]);
-		line = strtok(hold, " \n\t\v\r\a");
-/**		printf("Line:%s\n", line);
-		if (strcmp("push", line) == 0)
-			printf("push!");
-		else if (strcmp("pall", line) == 0)
-			printf("pall!");
-		else if (strcmp("pint", line) == 0)
-                        printf("pint!");
-		else if (strcmp("pop", line) == 0)
-                        printf("pop!");
-		else if (strcmp("swap", line) == 0)
-                        printf("swap!");
-		else if (strcmp("add", line) == 0)
-                        printf("add");
-		else if (strcmp("nop", line) == 0)
-                        printf("nop!");
-		else
-			printf("None!");
-	}
-*/		f = cmd(line);
-		if (f)
-			f(&stack, i);
-	}
+	printf("L%d: unknown instruction %s", line_number, code);
+	exit(EXIT_FAILURE);
 }
 
 #include "monty.h"
-
+unsigned int line_number = 1;
 /**
  *
  *
@@ -74,49 +31,34 @@ void op_code_check(char **lines)
 
 int main(int argc, char **argv)
 {
-        int i, len, linelen, copy, a = 0, length = 0;
         int read;
         size_t len2 = 0;
-        char *line = NULL;
-        char *file, **lines;
+        char *line = NULL, *check;
         FILE *fd;
-
-        (void)linelen;
-        (void)copy;
+	stack_t *stack = NULL;
+        void (*f)(stack_t **, unsigned int);
 
         if (argc != 2)
         {
                 printf("USAGE: monty file\n");
                 exit(EXIT_FAILURE);
         }
-        len = strlen(argv[1]);
-        file = malloc(sizeof(char) * len);
-        for (i = 0; argv[1][i] != '\0'; i++)
-                file[i] = argv[1][i];
-        if (access(file, F_OK ) != 0)
+	fd = fopen(argv[1], "r");
+	if (fd == NULL)
         {
-                printf("Error: Can't open file %s\n", file);
-                free(file);
+                printf("Error: Can't open file %s\n", argv[1]);
+                free(line);
                 exit(EXIT_FAILURE);
         }
-        length = get_len(file);
-        lines = malloc(length * sizeof(char*));
-        if (lines == NULL)
-        {
-		printf("ERROR FILL IN LATER");
-        }
-	fd = fopen(file, "r");
         while ((read = getline(&line, &len2, fd)) != -1)
         {
-		lines[a] = malloc(strlen(line + 1) * sizeof(char));
-		strcpy(lines[a], line);
-		a++;
+		check = strtok(line, " \n\t\v\r\a");
+		line_number++;
+		f = cmd(check);
+                if (f)
+                        f(&stack, line_number);
         }
-	op_code_check(lines);
-	while(lines[a] != NULL)
-		free(lines[a]);
         fclose(fd);
-        free(file);
-        free(lines);
+	free(line);
         return (0);
 }

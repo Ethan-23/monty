@@ -6,7 +6,7 @@ void push(stack_t **stack, unsigned int line_number)
 	int i;
 	(void)line_number;
 
-	line = strtok(NULL, " ");
+	line = strtok(NULL, " \n\t\v\r\a");
         i = atoi(line);
 	add_dnodeint(stack, i);
 }
