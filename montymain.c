@@ -1,4 +1,9 @@
 #include "monty.h"
+/**
+ * cmd - thing
+ * @code: thing
+ * Return: thing
+ */
 void (*cmd(char *code))(stack_t **stack, unsigned int line_number)
 {
 	instruction_t cmd_list[] = {
@@ -25,44 +30,45 @@ void (*cmd(char *code))(stack_t **stack, unsigned int line_number)
 #include "monty.h"
 unsigned int line_number = 1;
 /**
- *
- *
- *
+ * main - thing
+ * @argc: thing
+ * @argv: thing
+ * Return: thing
  */
 
 int main(int argc, char **argv)
 {
-        int read;
-        size_t len2 = 0;
-        char *line = NULL, *check;
-        FILE *fd;
+	int read;
+	size_t len2 = 0;
+	char *line = NULL, *check;
+	FILE *fd;
 	stack_t *stack = NULL;
-        void (*f)(stack_t **, unsigned int);
+	void (*f)(stack_t **, unsigned int);
 
-        if (argc != 2)
-        {
-                printf("USAGE: monty file\n");
+	if (argc != 2)
+	{
+		printf("USAGE: monty file\n");
 		free_stack(&stack);
-                exit(EXIT_FAILURE);
-        }
+		exit(EXIT_FAILURE);
+	}
 	fd = fopen(argv[1], "r");
 	if (fd == NULL)
-        {
-                printf("Error: Can't open file %s\n", argv[1]);
-                free(line);
+	{
+		printf("Error: Can't open file %s\n", argv[1]);
+		free(line);
 		free_stack(&stack);
-                exit(EXIT_FAILURE);
-        }
-        while ((read = getline(&line, &len2, fd)) != -1)
-        {
+		exit(EXIT_FAILURE);
+	}
+	while ((read = getline(&line, &len2, fd)) != -1)
+	{
 		check = strtok(line, " \n\t\v\r\a");
 		line_number++;
 		f = cmd(check);
-                if (f)
-                        f(&stack, line_number);
-        }
-        fclose(fd);
+		if (f)
+			f(&stack, line_number);
+	}
+	fclose(fd);
 	free_stack(&stack);
 	free(line);
-        return (0);
+	return (0);
 }
