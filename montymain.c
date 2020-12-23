@@ -8,6 +8,7 @@ void (*cmd(char *code))(stack_t **stack, unsigned int line_number)
 		{"pop", pop},
 		{"swap", swap},
 		{"add", add},
+		{NULL, fstack},
 		{NULL, NULL}
 	};
 	int i;
@@ -41,6 +42,7 @@ int main(int argc, char **argv)
         if (argc != 2)
         {
                 printf("USAGE: monty file\n");
+		free_stack(&stack);
                 exit(EXIT_FAILURE);
         }
 	fd = fopen(argv[1], "r");
@@ -48,6 +50,7 @@ int main(int argc, char **argv)
         {
                 printf("Error: Can't open file %s\n", argv[1]);
                 free(line);
+		free_stack(&stack);
                 exit(EXIT_FAILURE);
         }
         while ((read = getline(&line, &len2, fd)) != -1)
@@ -59,6 +62,7 @@ int main(int argc, char **argv)
                         f(&stack, line_number);
         }
         fclose(fd);
+	free_stack(&stack);
 	free(line);
         return (0);
 }

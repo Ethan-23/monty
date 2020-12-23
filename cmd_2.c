@@ -13,3 +13,9 @@ void nop(stack_t **stack, unsigned int line_number)
         (void)line_number;
 	printf("nop");
 }
+
+void fstack(stack_t **stack, unsigned int line_number)
+{
+	(void)line_number;
+	free_stack(stack);
+}

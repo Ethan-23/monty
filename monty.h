@@ -38,6 +38,7 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 extern unsigned int line_number;
+void free_stack(stack_t **stack);
 void op_code_check(char **lines);
 int get_len(char *filename);
 void (*cmd(char *op_code))(stack_t **stack, unsigned int line_number);
@@ -50,5 +51,6 @@ void pop(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
+void fstack(stack_t **stack, unsigned int line_number);
 
 #endif
