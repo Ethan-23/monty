@@ -23,7 +23,7 @@ void (*cmd(char *code))(stack_t **stack, unsigned int line_number)
 		if (strcmp(cmd_list[i].opcode, code) == 0)
 			return (cmd_list[i].f);
 	}
-	fprintf(stderr,"L%d: unknown instruction %s\n", line_number, code);
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, code);
 	exit(EXIT_FAILURE);
 }
 
@@ -47,14 +47,14 @@ int main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		fprintf(stderr,"USAGE: monty file\n");
+		fprintf(stderr, "USAGE: monty file\n");
 		free_stack(&stack);
 		exit(EXIT_FAILURE);
 	}
 	fd = fopen(argv[1], "r");
 	if (fd == NULL)
 	{
-		fprintf(stderr,"Error: Can't open file %s\n", argv[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		free(line);
 		free_stack(&stack);
 		exit(EXIT_FAILURE);
