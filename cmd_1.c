@@ -8,10 +8,17 @@
 void push(stack_t **stack, unsigned int line_number)
 {
 	char *line;
-	int i;
-	(void)line_number;
+	int i, j, len = 0;
 
 	line = strtok(NULL, " \n\t\v\r\a");
+	if (line == NULL)
+		printf("L%d: usage: push integer", line_number);
+	len = strlen(line);
+	for (j = 0; j < len; j++)
+		if (isdigit(line[j]) == 0)
+			printf("L%d: usage: push integer", line_number);
+		else
+			break;
 	i = atoi(line);
 	add_dnodeint(stack, i);
 }
