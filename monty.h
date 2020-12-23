@@ -38,9 +38,11 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-char *op_code_check(char **lines);
+void op_code_check(char **lines);
 int get_len(char *filename);
 void (*cmd(char *op_code))(stack_t **stack, unsigned int line_number);
+void print_dlistint(stack_t **h, unsigned int line_number);
+stack_t *add_dnodeint(stack_t **head, unsigned int n);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);

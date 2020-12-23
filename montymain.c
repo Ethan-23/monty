@@ -1,13 +1,36 @@
 #include "monty.h"
+void (*cmd(char *code))(stack_t **stack, unsigned int line_number)
+{
+	instruction_t cmd_list[] = {
+		{"push", push},
+		{"pall", pall},
+		{"pint", pint},
+		{"pop", pop},
+		{"swap", swap},
+		{"add", add},
+		{NULL, NULL}
+	};
+	int i;
+
+	for (i = 0; cmd_list[i].opcode != NULL; i++)
+	{
+		if (strcmp(cmd_list[i].opcode, code) == 0)
+			break;
+	}
+	return (cmd_list[i].f);
+}
 /**void push(stack_t **stack, unsigned int line_number)
 {
 	printf("Test %d", line_number);
 	}*/
 
-char *op_code_check(char **lines)
+void op_code_check(char **lines)
 {
 	char *hold = NULL, *line = NULL;
 	int i = 0;
+        stack_t *stack = NULL;
+        void (*f)(stack_t **, unsigned int);
+
 	for (i = 0; lines[i] != '\0'; i++)
 	{
 		hold = malloc((strlen(lines[i]) + 1) * sizeof(char));
@@ -16,8 +39,8 @@ char *op_code_check(char **lines)
 			printf("Error fill later");
 		}
 		strcpy(hold, lines[i]);
-		line = strtok(hold, " ");
-		printf("Line: %s\n", line);
+		line = strtok(hold, " \n\t\v\r\a");
+/**		printf("Line:%s\n", line);
 		if (strcmp("push", line) == 0)
 			printf("push!");
 		else if (strcmp("pall", line) == 0)
@@ -35,7 +58,10 @@ char *op_code_check(char **lines)
 		else
 			printf("None!");
 	}
-	return (0);
+*/		f = cmd(line);
+		if (f)
+			f(&stack, i);
+	}
 }
 
 #include "monty.h"
