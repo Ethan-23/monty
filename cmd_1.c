@@ -12,11 +12,19 @@ void push(stack_t **stack, unsigned int line_number)
 
 	line = strtok(NULL, " \n\t\v\r\a");
 	if (line == NULL)
+	{
 		fprintf(stderr,"L%d: usage: push integer\n", line_number);
+		free_stack(stack);
+		exit(EXIT_FAILURE);
+	}
 	len = strlen(line);
 	for (j = 0; j < len; j++)
 		if (isdigit(line[j]) == 0)
+		{
 			fprintf(stderr,"L%d: usage: push integer\n", line_number);
+			free_stack(stack);
+			exit(EXIT_FAILURE);
+		}
 		else
 			break;
 	i = atoi(line);

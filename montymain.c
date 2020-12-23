@@ -61,11 +61,14 @@ int main(int argc, char **argv)
 	}
 	while ((read = getline(&line, &len2, fd)) != -1)
 	{
-		check = strtok(line, " \n\t\v\r\a");
-		line_number++;
-		f = cmd(check);
-		if (f)
-			f(&stack, line_number);
+		if (read != -1)
+		{
+			check = strtok(line, " \n\t\v\r\a");
+			line_number++;
+			f = cmd(check);
+			if (f)
+				f(&stack, line_number);
+		}
 	}
 	fclose(fd);
 	free_stack(&stack);
