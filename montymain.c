@@ -23,12 +23,12 @@ void (*cmd(char *code))(stack_t **stack, unsigned int line_number)
 		if (strcmp(cmd_list[i].opcode, code) == 0)
 			return (cmd_list[i].f);
 	}
-	printf("L%d: unknown instruction %s", line_number, code);
+	printf("L%d: unknown instruction %s\n", line_number, code);
 	exit(EXIT_FAILURE);
 }
 
 #include "monty.h"
-unsigned int line_number = 1;
+unsigned int line_number = 0;
 /**
  * main - thing
  * @argc: thing
