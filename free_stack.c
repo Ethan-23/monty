@@ -13,6 +13,6 @@ void free_stack(stack_t **stack)
 	else
 	{
 		free_stack(&((*stack)->next));
-		free(stack);
+		free(*stack);
 	}
 }
