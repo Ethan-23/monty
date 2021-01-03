@@ -92,7 +92,38 @@ void pop(stack_t **stack, unsigned int line_number)
  */
 void swap(stack_t **stack, unsigned int line_number)
 {
-	(void)stack;
-	(void)line_number;
-	printf("swap");
+	stack_t *stak;
+	stack_t *temp;
+
+	if ((*stack) == NULL || stack == NULL)
+        {
+                fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+                free_stack(stack);
+                exit(EXIT_FAILURE);
+        }
+	stak = (*stack);
+	temp = stak->next;
+	if(temp != NULL)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		free_stack(stack);
+                exit(EXIT_FAILURE);
+	}
+	if (temp->next)
+	{
+		stak->next = temp->next;
+		temp->next->prev = stak;
+		stak->prev = temp;
+		temp->prev = NULL;
+		temp->next = stak;
+		(*stack) = temp;
+	}
+	else
+	{
+		stak->next = NULL;
+		stak->prev = temp;
+		temp->prev = NULL;
+		temp->next = stak;
+		(*stack) = temp;
+	}
 }
